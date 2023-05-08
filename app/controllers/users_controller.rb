@@ -20,12 +20,16 @@ class UsersController < ApplicationController
 
   def create
     user_dto = UserDTO.new(user_params)
-    if user_dto.valid?
-      UserRepository.create(user_dto)
-      render json: { message: 'User created successfully' }, status: :created
-    else
+    unless user_dto.valid?
       render json: { errors: user_dto.errors.full_messages }, status: :unprocessable_entity
+      return
     end
+    new_user = UserService.create(user_dto)
+    unless new_user
+      render json: { errors: "Failed to create user!" }, status: :unprocessable_entity
+      return
+    end
+    render json: { message: 'User created successfully' }, status: :created
   end
 
   private

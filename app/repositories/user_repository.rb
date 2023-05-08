@@ -1,14 +1,14 @@
 class UserRepository
   class << self
-    def create(user_dto)
-      user = User.create(
-        user_name: user_dto.user_name,
-        bio: user_dto.bio,
-        password: user_dto.password,
-        role: user_dto.role,
-        email: user_dto.email
+    def create(user)
+      new_user = User.create(
+        user_name: user.user_name,
+        bio: user.bio,
+        password: user.password,
+        role: user.role,
+        email: user.email
       )
-      user
+      new_user
     end
 
     def find_all
