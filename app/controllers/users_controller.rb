@@ -21,14 +21,16 @@ class UsersController < ApplicationController
   def create
     user_dto = UserDTO.new(user_params)
     unless user_dto.valid?
-      render json: { errors: user_dto.errors.full_messages }, status: :unprocessable_entity
+      render json: ErrorService.invalid_data('user'), status: :unprocessable_entity
       return
     end
-    new_user = UserService.create(user_dto)
-    unless new_user
-      render json: { errors: "Failed to create user!" }, status: :unprocessable_entity
+
+    user_service = UserService.create(user_dto)
+    unless user_service.has_errors?
+      render json: {errors: user_service.errors}, status: :unprocessable_entity
       return
     end
+
     render json: { message: 'User created successfully' }, status: :created
   end
 
@@ -39,6 +41,6 @@ class UsersController < ApplicationController
   end
 
   def user_not_found
-    render json: { error: "User not found..." }, status: :not_found
+    render json: ErrorService.not_found('User'), status: :not_found
   end
 end

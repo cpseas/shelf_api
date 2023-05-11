@@ -12,4 +12,10 @@ class UserDTO
   def valid?
     user_name.present? && bio.present? && password.present? && role.present? && email.present?
   end
+
+  def to_h
+    hash = {}
+    instance_variables.each { |t| hash[t.to_s.delete('@')] = instance_variable_get(t) }
+    hash
+  end
 end
