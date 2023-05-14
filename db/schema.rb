@@ -14,6 +14,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_014025) do
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -58,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_014025) do
   create_table "themes", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

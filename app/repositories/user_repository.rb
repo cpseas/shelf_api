@@ -9,7 +9,7 @@ class UserRepository
         email: user.email
       )
       unless res.save
-        return ResultService.new(nil, res.errors.full_messages)
+        return ResultService.new(nil, res.errors.messages)
       end
       return ResultService.new(res)
     end

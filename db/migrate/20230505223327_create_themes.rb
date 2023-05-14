@@ -3,6 +3,7 @@ class CreateThemes < ActiveRecord::Migration[7.0]
     create_table :themes do |t|
       t.string :name
       t.text :description
+      t.boolean :active
 
       t.timestamps
     end
