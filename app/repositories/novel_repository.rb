@@ -1,10 +1,12 @@
-class GenreRepository
+class NovelRepository
   class << self
-    def create(genre)
-      res = Genre.new(
-        name: genre.name,
-        description: genre.description,
-        active: genre.active,
+    def create(novel)
+      res = Novel.new(
+        title: novel.title,
+        synopsis: novel.synopsis,
+        user_id: novel.user_id,
+        status: novel.status,
+        published_date: novel.published_date
       )
       unless res.save
         return ResultService.new(nil, res.errors.messages)
@@ -13,7 +15,7 @@ class GenreRepository
     end
 
     def find_all
-      res = Genre.all
+      res = Novel.all
       unless res
         return ResultService.new(nil, res.errors.messages)
       end
@@ -21,7 +23,7 @@ class GenreRepository
     end
 
     def find_by_id(id)
-      res = Genre.find(id)
+      res = Novel.find(id)
       ResultService.new(res)
     end
   end

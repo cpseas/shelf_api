@@ -4,16 +4,15 @@ class GenresController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :genre_not_found
 
   def index
-    genres = GenreRepository.find_all
-    if genres.present?
-      render json: genres
-    else
+    genres = GenreService.find_all
+    unless genres.has_errors?
       render json: { message: 'No Genres!' }
     end
+    render json: genres
   end
 
   def show
-    genre = GenreRepository.find_by_id(params[:id])
+    genre = GenreService.find_by_id(params[:id])
     render json: genre
   end
 

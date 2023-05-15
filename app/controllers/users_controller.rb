@@ -1,20 +1,18 @@
 require_relative '../dtos/user_dto'
-require_relative '../repositories/user_repository'
 
 class UsersController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :user_not_found
 
   def index
-    users = UserRepository.find_all
-    if users.present?
-      render json: users
-    else
+    users = UserService.find_all
+    unless users.has_errors?
       render json: {message: "No Users!"}
     end
+    render json: users
   end
 
   def show
-    user = UserRepository.find_by_id(params[:id])
+    user = UserService.find_by_id(params[:id])
     render json: user
   end
 

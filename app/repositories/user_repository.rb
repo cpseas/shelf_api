@@ -11,16 +11,20 @@ class UserRepository
       unless res.save
         return ResultService.new(nil, res.errors.messages)
       end
-      return ResultService.new(res)
+      ResultService.new(res)
     end
 
     def find_all
-      User.all
+      res = User.all
+      unless res
+        return ResultService.new(nil, res.errors.messages)
+      end
+      ResultService.new(res)
     end
 
     def find_by_id(id)
-      user = User.find(id)
-      user
+      res = User.find(id)
+      ResultService.new(res)
     end
   end
 end

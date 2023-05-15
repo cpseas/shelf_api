@@ -4,16 +4,15 @@ class ThemesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFount, with: :genre_not_found
 
   def index
-    themes = ThemeRepository.find_all
-    if themes.present?
-      render json: themes
-    else
+    themes = ThemeService.find_all
+    unless themes.has_errors?
       render json: { message: 'No Themes!' }
     end
+    render json: themes
   end
 
   def show
-    theme = ThemeRepository.find_by_id(params[:id])
+    theme = ThemeService.find_by_id(params[:id])
     render json: theme
   end
 
