@@ -9,4 +9,12 @@ class ResultService
   def has_errors?
     errors.empty?
   end
+
+  def has_data?
+    data.present?
+  end
+
+  def empty_data?
+    data.empty?
+  end
 end

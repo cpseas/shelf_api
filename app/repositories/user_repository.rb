@@ -1,30 +1,25 @@
 class UserRepository
   class << self
-    def create(user)
-      res = User.new(
-        user_name: user.user_name,
-        bio: user.bio,
-        password: user.password,
-        role: user.role,
-        email: user.email
-      )
-      unless res.save
-        return ResultService.new(nil, res.errors.messages)
+    def create(user_dto)
+      new_user = ObjectCreator.create_object('User', user_dto)
+      if new_user.save
+        ResultService.new(user_dto)
+      else
+        ResultService.new(nil, user_dto.errors.messages)
       end
-      ResultService.new(res)
     end
 
     def find_all
-      res = User.all
-      unless res
-        return ResultService.new(nil, res.errors.messages)
-      end
-      ResultService.new(res)
+      users = User.all
+      ResultService.new(users)
     end
 
     def find_by_id(id)
-      res = User.find(id)
-      ResultService.new(res)
+      user = User.find_by(id: id)
+      if user.nil?
+        ResultService.new(nil)
+      end
+      ResultService.new(users)
     end
   end
 end

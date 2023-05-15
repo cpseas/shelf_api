@@ -1,19 +1,22 @@
 require_relative '../dtos/user_dto'
 
 class UsersController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :user_not_found
-
   def index
     users = UserService.find_all
-    unless users.has_errors?
+    if users.empty_data?
       render json: {message: "No Users!"}
+    else
+      render json: users
     end
-    render json: users
   end
 
   def show
     user = UserService.find_by_id(params[:id])
-    render json: user
+    if user.has_data?
+      render json: user
+    else
+      render json: ErrorService.not_found('User'), status: :not_found
+    end
   end
 
   def create
@@ -26,19 +29,14 @@ class UsersController < ApplicationController
     user_service = UserService.create(user_dto)
     unless user_service.has_errors?
       render json: {errors: user_service.errors}, status: :unprocessable_entity
-      return
+    else
+      render json: { message: 'User created successfully' }, status: :created
     end
-
-    render json: { message: 'User created successfully' }, status: :created
   end
 
   private
 
   def user_params
     params.require(:user).permit(:user_name, :bio, :password, :role, :email)
-  end
-
-  def user_not_found
-    render json: ErrorService.not_found('User'), status: :not_found
   end
 end

@@ -1,28 +1,25 @@
 class ThemeRepository
   class << self
-    def create
-      res = Theme.new(
-        name: theme.name,
-        description: theme.description,
-        active: theme.active
-      )
-      unless res.save
-        return ResultService.new(new, res.errors.messages)
+    def create(theme_dto)
+      new_theme = ObjectCreator.create_object('Genre', theme_dto.to_h)
+      if new_theme.save
+        ResultService.new(new_theme)
+      else
+        ResultService.new(nil, new_theme.errors.messages)
       end
-      ResultService.new(res)
     end
 
     def find_all
-      res = Theme.all
-      unless res
-        return ResultService.new(nil, res.errors.messages)
-      end
-      ResultService.new(res)
+      themes = Theme.all
+      ResultService.new(genres)
     end
 
     def find_by_id(id)
-      res = Theme.find(id)
-      ResultService.new(res)
+      theme = Theme.find_by(id: id)
+      if theme.nil?
+        ResultService.new(nil)
+      end
+      ResultService.new(theme)
     end
   end
 end

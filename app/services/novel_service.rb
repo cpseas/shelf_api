@@ -2,8 +2,7 @@ require_relative '../repositories/novel_repository'
 
 class NovelService
   def self.create(novel_dto)
-    novel = Novel.new(novel_dto.to_h)
-    NovelRepository.create(novel)
+    NovelRepository.create(novel_dto)
   end
 
   def self.find_all

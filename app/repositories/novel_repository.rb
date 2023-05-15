@@ -1,30 +1,25 @@
 class NovelRepository
   class << self
-    def create(novel)
-      res = Novel.new(
-        title: novel.title,
-        synopsis: novel.synopsis,
-        user_id: novel.user_id,
-        status: novel.status,
-        published_date: novel.published_date
-      )
-      unless res.save
-        return ResultService.new(nil, res.errors.messages)
+    def create(novel_dto)
+      new_novel = ObjectCreator.create_object('Novel', novel_dto)
+      if new_novel.save
+        ResultService.new(new_novel)
+      else
+        ResultService.new(nil, new_novel.errors.messages)
       end
-      ResultService.new(res)
     end
 
     def find_all
-      res = Novel.all
-      unless res
-        return ResultService.new(nil, res.errors.messages)
-      end
-      ResultService.new(res)
+      novels = Novel.all
+      ResultService.new(novels)
     end
 
     def find_by_id(id)
-      res = Novel.find(id)
-      ResultService.new(res)
+      novel = Novel.find_by(id: id)
+      if novel.nil?
+        ResultService.new(nil)
+      end
+      ResultService.new(novel)
     end
   end
 end
