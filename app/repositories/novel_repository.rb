@@ -1,7 +1,6 @@
 class NovelRepository
   class << self
-    def create(novel_dto)
-      new_novel = ObjectCreator.create_object('Novel', novel_dto)
+    def create(new_novel)
       if new_novel.save
         ResultService.new(new_novel)
       else

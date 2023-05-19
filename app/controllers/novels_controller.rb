@@ -20,7 +20,7 @@ class NovelsController < ApplicationController
   end
 
   def create
-    novel_dto = NovelDTO.net(novel_params)
+    novel_dto = NovelDTO.new(novel_params)
     unless novel_dto.valid?
       render json: ErrorService.invalid_data('novel'), status: :unprocessable_entity
       return
@@ -37,6 +37,6 @@ class NovelsController < ApplicationController
   private
 
   def novel_params
-    params.require(:novel).permit(:title, :synopsis, :user_id, :status, :published_date)
+    params.require(:novel).permit(:title, :synopsis, :user_id, :status, :published_date, genres: [], themes: [])
   end
 end

@@ -1,7 +1,7 @@
 class ThemeRepository
   class << self
     def create(theme_dto)
-      new_theme = ObjectCreator.create_object('Genre', theme_dto.to_h)
+      new_theme = ObjectCreator.create('Theme', theme_dto.to_h)
       if new_theme.save
         ResultService.new(new_theme)
       else
@@ -11,7 +11,7 @@ class ThemeRepository
 
     def find_all
       themes = Theme.all
-      ResultService.new(genres)
+      ResultService.new(themes)
     end
 
     def find_by_id(id)

@@ -1,7 +1,6 @@
 class GenreRepository
   class << self
-    def create(genre_dto)
-      new_genre = ObjectCreator.create_object('Genre', genre_dto.to_h)
+    def create(new_genre)
       if new_genre.save
         ResultService.new(new_genre)
       else

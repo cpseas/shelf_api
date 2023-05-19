@@ -1,11 +1,10 @@
 class UserRepository
   class << self
-    def create(user_dto)
-      new_user = ObjectCreator.create_object('User', user_dto)
+    def create(new_user)
       if new_user.save
-        ResultService.new(user_dto)
+        ResultService.new(new_user)
       else
-        ResultService.new(nil, user_dto.errors.messages)
+        ResultService.new(nil, new_user.errors.messages)
       end
     end
 
@@ -19,7 +18,7 @@ class UserRepository
       if user.nil?
         ResultService.new(nil)
       end
-      ResultService.new(users)
+      ResultService.new(user)
     end
   end
 end

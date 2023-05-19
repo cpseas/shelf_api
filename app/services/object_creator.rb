@@ -1,5 +1,5 @@
 class ObjectCreator
-  def self.create_object(class_name, *args)
+  def self.create(class_name, *args)
     Object.const_get(class_name).new(*args)
   end
 end
