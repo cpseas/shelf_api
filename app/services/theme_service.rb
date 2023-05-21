@@ -2,6 +2,7 @@ require_relative '../repositories/theme_repository'
 
 class ThemeService
   def self.create(theme_dto)
+    new_theme = ObjectCreator.create('Theme', theme_dto)
     ThemeRepository.create(theme_dto)
   end
 

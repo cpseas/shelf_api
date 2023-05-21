@@ -26,7 +26,7 @@ class ThemesController < ApplicationController
       return
     end
 
-    theme_service = ThemeService.create(theme_dto)
+    theme_service = ThemeService.create(theme_dto.to_h)
     unless theme_service.has_errors?
       render json: { errors: theme_service.errors }, status: :unprocessable_entity
     else

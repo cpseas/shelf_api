@@ -2,7 +2,7 @@ require_relative '../repositories/user_repository'
 
 class UserService
   def self.create(user_dto)
-    new_user = ObjectCreator.create('User', user_dto.to_h)
+    new_user = ObjectCreator.create('User', user_dto)
     UserRepository.create(new_user)
   end
 

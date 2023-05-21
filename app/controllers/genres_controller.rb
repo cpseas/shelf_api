@@ -26,7 +26,7 @@ class GenresController < ApplicationController
       return
     end
 
-    genre_service = GenreService.create(genre_dto)
+    genre_service = GenreService.create(genre_dto.to_h)
     unless genre_service.has_errors?
       render json: { errors: genre_service.errors }, status: :unprocessable_entity
     else

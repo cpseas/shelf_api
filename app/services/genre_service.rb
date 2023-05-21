@@ -2,7 +2,7 @@ require_relative '../repositories/genre_repository'
 
 class GenreService
   def self.create(genre_dto)
-    new_genre = ObjectCreator.create('Genre', genre_dto.to_h)
+    new_genre = ObjectCreator.create('Genre', genre_dto)
     GenreRepository.create(new_genre)
   end
 

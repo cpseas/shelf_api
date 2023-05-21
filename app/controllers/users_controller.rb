@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       return
     end
 
-    user_service = UserService.create(user_dto)
+    user_service = UserService.create(user_dto.to_h)
     unless user_service.has_errors?
       render json: {errors: user_service.errors}, status: :unprocessable_entity
     else
