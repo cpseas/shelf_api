@@ -2,9 +2,8 @@ require_relative '../repositories/novel_repository'
 
 class NovelService
   def self.create(novel_dto)
-    novel = novel_dto.to_h
-    genres = Genre.find(novel["genres"])
-    themes = Theme.find(novel["themes"])
+    genres = GenreRepository.find_by_ids(novel_dto['genres'])
+    themes = ThemeRepository.find_by_ids(novel_dto['themes'])
     new_novel = NovelCreator.create(novel.except('genres', 'themes'))
     new_novel.genres = genres
     new_novel.themes = themes

@@ -26,7 +26,7 @@ class NovelsController < ApplicationController
       return
     end
 
-    novel_service = NovelService.create(novel_dto)
+    novel_service = NovelService.create(novel_dto.to_h)
     unless novel_service.has_errors?
       render json: { errors: novel_service.errors }, status: :unprocessable_entity
     else

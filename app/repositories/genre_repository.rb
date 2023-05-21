@@ -20,5 +20,10 @@ class GenreRepository
       end
       ResultService.new(genre)
     end
+
+    def find_by_ids(ids)
+      genres = Genre.where(id: ids)
+      ResultService.new(genres)
+    end
   end
 end
